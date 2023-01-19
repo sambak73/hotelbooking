@@ -23,18 +23,18 @@ with col2:
     """
 st.write(content2)
 data = pd.read_csv('data.csv',sep=";")
-col3, col4 = st.columns(2)
+col3,emptycol, col4 = st.columns([1.5,.5,1.5])
 for index, row in data[:10].iterrows():
     #st.write(row["title"])
     with col3:
         st.header(row["title"])
         st.write(row["description"])
         st.image("images/"+ row["image"])
-        st.write(row["url"])
+        st.write(f"[Source code]({row['url']})")
 
 for index, row in data[10:].iterrows():
     with col4:
         st.header(row["title"])
         st.write(row["description"])
         st.image("images/"+ row["image"])
-        st.write(row["url"])
+        st.write(f"[Source code]({row['url']})")
