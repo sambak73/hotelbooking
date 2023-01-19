@@ -1,6 +1,0 @@
-The user entered head and the current percentage is 100.0
-The user entered head and the current percentage is 100.0
-The user entered tail and the current percentage is 0.0
-The user entered head and the current percentage is 50.0
-The user entered head and the current percentage is 66.66666666666666
-The user entered tail and the current percentage is 50.0

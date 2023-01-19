@@ -1,3 +1,0 @@
-"Station", 'Temperature'
-"India", '35'
-"New York", '18'
