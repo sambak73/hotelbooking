@@ -16,11 +16,11 @@ def send_email(email,message):
         server.sendmail(email,receiver,message)
 
 with st.form(key="contact_form"):
-    topics = []
+#    topics = []
     email = st.text_input("Your Email","", key="email")
-    for index, topic in data.iterrows():
-        topics.append(topic["topic"])
-    option = st.selectbox("Topic to discuss", topics)
+#    for index, topic in data.iterrows():
+#        topics.append(topic["topic"])
+    option = st.selectbox("Topic to discuss", data["topic"])
     message = st.text_area("Your Message", "", key="query")
     messages = f"""\
 Subject: {option} by {email}
