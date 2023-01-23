@@ -3,18 +3,21 @@ import requests
 import os
 
 api = 'db53b7c8aacc4b89a4dd7934f08e9158'
-
-url = 'https://newsapi.org/v2/everything?q=tesla&from=2022-12-23&sortBy=publishedAt&apiKey=db53b7c8aacc4b89a4dd7934f08e9158&language=en' #&pageSize=20'
+topic = input("Enter the topic for news") + '\n'
+url = "https://newsapi.org/v2/everything?"\
+      f"q={topic}&"\
+      "from=2022-12-23&sortBy=publishedAt&apiKey=db53b7c8aacc4b89a4dd7934f08e9158&language=en" #&pageSize=20"
+print(url)
 r = requests.request('GET',url)
 data = r.json()
-
+print(data)
 host = 'smtp.gmail.com'
 port = 465
 sender = 'sambasivam.k@gmail.com'
 password = os.environ['EPASSWORD']
 receiver = 'smbkrishnamurthy@gmail.com'
 context = ssl.create_default_context()
-body = "Subject: Today's News" + "\n"
+body = f"Subject: Today's News on {topic}" + "\n"
 for article in data['articles'][0:20]:
     #body.append([article['title'],article['description'],article['url']])
     title = article['title'].title()
