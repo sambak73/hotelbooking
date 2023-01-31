@@ -19,12 +19,19 @@ sky_images = {
 }
 
 if place:
+    try:
+        filtered_data =  get_value(place=place, days=days)
 
-    d, t =  get_value(place=place, days=days, choice=option)
-
-    if option == 'Temperature':
-        fig = px.line(x=d, y=t, labels={"x": "Date", "y": "Temperature"})
-        st.plotly_chart(fig)
-    if option == 'Sky':
-        sky_conditions = [sky_images[condition] for condition in t]
-        st.image(sky_conditions, width=100, caption=d)
+        if option == 'Temperature':
+            d = [item['dt_txt'] for item in filtered_data]
+            t = [item['main']['temp'] for item in filtered_data]
+            t = [tc/10 for tc in t]
+            fig = px.line(x=d, y=t, labels={"x": "Date", "y": "Temperature"})
+            st.plotly_chart(fig)
+        if option == 'Sky':
+            d = [item['dt_txt'] for item in filtered_data]
+            t = [item['weather'][0]['main'] for item in filtered_data]
+            sky_conditions = [sky_images[condition] for condition in t]
+            st.image(sky_conditions, width=100, caption=d)
+    except KeyError:
+        st.write(f'{place} is not found, Please try with correct place')
