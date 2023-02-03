@@ -28,15 +28,17 @@ def extract(data):
 
 
 def writedata(value):
-    with open('event.txt', 'a') as file:
-        value = value + '\n'
-        file.write(value)
-
+    rows = value.split(',')
+    row = [item.strip() for item in rows]
+    cursor.execute("INSERT INTO events VALUES(?,?,?)", row)
+    connection.commit()
 def readdata(value):
-    with open('event.txt', 'r') as file:
-        value = file.read()
-        return value
-
+    rows = value.split(',')
+    row = [item.strip() for item in rows]
+    name, city, date = row
+    cursor.execute("SELECT * FROM events WHERE name Like ?", (name,))
+    result = cursor.fetchall()
+    return str(result)
 def send_email():
     message = 'Subject:Music event'\
 'New Event added'
@@ -45,13 +47,16 @@ def send_email():
         server.sendmail(sender, receiver, message)
 
 if __name__ == '__main__':
+    connection = sqlite3.connect('webscrapping.db')
+    cursor = connection.cursor()
+
     while True:
         data = scrap(url)
         returned_data = extract(data)
-        #  print(returned_data)
-        existing_data = readdata(returned_data)
-        if returned_data not in existing_data:
-            if returned_data != 'No upcoming tours':
+        print(returned_data)
+        if returned_data != 'No upcoming tours':
+            existing_data = readdata(returned_data)
+            if not existing_data:
                 writedata(returned_data)
                 send_email()
         time.sleep(2)
